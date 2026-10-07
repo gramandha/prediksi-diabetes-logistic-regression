@@ -1,0 +1,26 @@
+﻿# Virtual environment
+venv-regresi/
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model files (optional — hapus baris ini jika ingin ikut push)
+# models/*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

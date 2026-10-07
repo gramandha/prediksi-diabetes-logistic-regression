@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3f7f8">
+<title>Cek risiko diabetes</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f3f7f8;
+  --surface: #fff;
+  --ink: #18313a;
+  --muted: #637780;
+  --line: #dce7e9;
+  --accent: #087f80;
+  --accent-dark: #066667;
+  --accent-soft: #e8f5f3;
+  --low: #54d2a6;
+  --medium: #f4bd58;
+  --high: #ff786f;
+  --navy: #15313b;
+  --navy-soft: #23434d;
+  --shadow: 0 18px 50px rgb(24 49 58 / 8%);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 10% -15%, #e1f1ee 0, transparent 34rem),
+    var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+button, input { font: inherit; }
+.topbar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--ink);
+  font-weight: 750;
+  text-decoration: none;
+  letter-spacing: -.02em;
+}
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.15rem;
+}
+.top-note {
+  color: var(--muted);
+  font-size: .82rem;
+  font-weight: 650;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 28px 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 26px 34px;
+  align-items: start;
+}
+.intro { grid-column: 1; }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-dark);
+  font-size: .82rem;
+  font-weight: 750;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: "";
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+}
+h1 {
+  max-width: 680px;
+  margin: 10px 0 12px;
+  font-size: clamp(2.05rem, 4vw, 3.05rem);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+.lead {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+.form-card {
+  grid-column: 1;
+  padding: 26px;
+  border: 1px solid rgb(220 231 233 / 85%);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.card-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -.02em;
+}
+.card-head p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+.progress-copy {
+  flex: 0 0 auto;
+  color: var(--accent-dark);
+  font-size: .8rem;
+  font-weight: 700;
+  text-align: right;
+}
+.progress-track {
+  height: 6px;
+  margin: 0 0 8px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #e9f0f1;
+}
+.progress-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #42b89d, var(--accent));
+  transition: width .25s ease;
+}
+.progress-caption {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: .78rem;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.field {
+  min-width: 0;
+  padding: 15px 15px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fbfdfd;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.field:focus-within {
+  border-color: #77bcb8;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgb(8 127 128 / 9%);
+}
+.field.invalid {
+  border-color: #d14f49;
+  background: #fffafa;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+label {
+  min-width: 0;
+  font-size: .91rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.num {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+input[type=number] {
+  width: 76px;
+  min-height: 39px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.unit {
+  min-width: 36px;
+  color: var(--muted);
+  font-size: .78rem;
+}
+.range-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 9px;
+  color: #819299;
+  font-size: .72rem;
+  line-height: 1.2;
+}
+input[type=range] {
+  display: block;
+  width: 100%;
+  height: 18px;
+  margin: 10px 0 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+button {
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 700;
+  transition: transform .15s, background .15s, border-color .15s;
+}
+button:hover:not(:disabled) { transform: translateY(-1px); }
+button:disabled { cursor: wait; opacity: .72; }
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding-inline: 19px;
+  background: var(--accent);
+  color: #fff;
+}
+.primary:hover:not(:disabled) { background: var(--accent-dark); }
+.primary:disabled { transform: none; }
+.button-icon { font-size: 1.1rem; line-height: 1; }
+.secondary {
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+.secondary:hover:not(:disabled) { border-color: var(--accent); }
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 17px;
+}
+.examples-label {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 700;
+}
+.example {
+  min-height: 36px;
+  padding: 6px 11px;
+  border-color: var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: .78rem;
+}
+.example::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--dot);
+  vertical-align: 1px;
+}
+.example[data-tone=low] { --dot: #249b77; }
+.example[data-tone=medium] { --dot: #d9971d; }
+.example[data-tone=high] { --dot: #d64e48; }
+.err {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  color: #a52c26;
+  font-size: .88rem;
+}
+.note {
+  display: flex;
+  gap: 12px;
+  grid-column: 1;
+  margin: -10px 0 0;
+  padding: 15px 17px;
+  border: 1px solid #d8e9e7;
+  border-radius: 13px;
+  background: #edf7f5;
+  color: #49636a;
+  font-size: .83rem;
+}
+.note-icon {
+  flex: 0 0 auto;
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+aside {
+  position: sticky;
+  top: 20px;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  overflow: hidden;
+  padding: 25px;
+  border-radius: 22px;
+  background: var(--navy);
+  color: #eaf4f4;
+  box-shadow: 0 22px 55px rgb(21 49 59 / 18%);
+  --tone: var(--muted);
+}
+aside.rendah { --tone: var(--low); }
+aside.sedang { --tone: var(--medium); }
+aside.tinggi { --tone: var(--high); }
+.result-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.result-head h2 {
+  margin: 0;
+  color: #f4f8f8;
+  font-size: 1.03rem;
+  letter-spacing: -.01em;
+}
+.model-tag {
+  padding: 5px 8px;
+  border: 1px solid rgb(213 234 234 / 18%);
+  border-radius: 999px;
+  color: #b9cdcf;
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.gauge {
+  position: relative;
+  width: min(220px, 76vw);
+  aspect-ratio: 1;
+  margin: 17px auto 9px;
+}
+.gauge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+.gauge circle {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.track { stroke: var(--navy-soft); }
+.bar {
+  stroke: var(--tone);
+  stroke-dasharray: 314.16;
+  stroke-dashoffset: 314.16;
+  transition: stroke-dashoffset .75s cubic-bezier(.2,.8,.2,1), stroke .35s;
+}
+.readout {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.pct {
+  color: #fff;
+  font-size: 3.5rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums;
+}
+.sub { margin-top: 8px; color: #b5c8ca; font-size: .82rem; }
+.badge {
+  display: table;
+  margin: 0 auto 8px;
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+  border-radius: 999px;
+  color: var(--tone);
+  font-size: .88rem;
+  font-weight: 750;
+}
+.verdict {
+  max-width: 32ch;
+  margin: 0 auto 20px;
+  color: #c4d4d6;
+  font-size: .89rem;
+  text-align: center;
+}
+.result-meta {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin: -7px 0 18px;
+  color: #96afb2;
+  font-size: .73rem;
+}
+.result-meta span + span::before {
+  content: "·";
+  margin-right: 7px;
+}
+.divider { height: 1px; background: rgb(213 234 234 / 14%); }
+.why h3 {
+  margin: 18px 0 11px;
+  color: #f1f7f7;
+  font-size: .91rem;
+}
+.contrib {
+  display: grid;
+  grid-template-columns: minmax(110px, 1.1fr) 1fr;
+  gap: 10px 11px;
+  align-items: center;
+  font-size: .76rem;
+}
+.contrib-label {
+  overflow: hidden;
+  color: #d1dfe0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.track-c {
+  position: relative;
+  height: 9px;
+  border-radius: 6px;
+  background: #24434d;
+}
+.track-c::after {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: 50%;
+  width: 1px;
+  background: #80999d;
+  content: "";
+}
+.fill { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
+.up { background: var(--high); }
+.down { background: #69b9ec; }
+.legend {
+  margin: 11px 0 0;
+  color: #9eb5b7;
+  font-size: .72rem;
+}
+.disclaimer {
+  margin: 20px 0 0;
+  padding: 12px;
+  border-radius: 11px;
+  background: rgb(255 255 255 / 6%);
+  color: #b5c8ca;
+  font-size: .73rem;
+}
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid #69c9c2; outline-offset: 3px; }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; }
+  .form-card { padding: 21px; }
+  aside { padding: 21px; }
+  .fields { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .topbar { padding: 16px 20px; }
+  .top-note { font-size: .7rem; }
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 26px 20px 42px;
+  }
+  .intro, .form-card, .note, aside { grid-column: 1; grid-row: auto; }
+  .intro { margin-bottom: 2px; }
+  .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  aside { position: static; }
+  .gauge { width: 195px; }
+}
+@media (max-width: 520px) {
+  .topbar { padding-inline: 16px; }
+  .top-note { max-width: 130px; text-align: right; }
+  .layout { padding: 22px 16px 34px; }
+  h1 { font-size: 2.2rem; }
+  .lead { font-size: .95rem; }
+  .form-card { padding: 18px 15px; border-radius: 17px; }
+  .card-head { align-items: flex-start; }
+  .progress-copy { max-width: 105px; padding-top: 3px; }
+  .fields { grid-template-columns: 1fr; }
+  .field { padding: 14px; }
+  .actions { align-items: stretch; }
+  .primary { width: 100%; }
+  .secondary { flex: 1; }
+  .examples { gap: 7px; }
+  .example { flex: 1 1 auto; }
+  aside { padding: 20px 17px; border-radius: 18px; }
+  .contrib { grid-template-columns: minmax(105px, 1.1fr) 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Ruang Sehat, beranda">
+    <span class="brand-mark" aria-hidden="true">✦</span>
+    <span>Ruang Sehat</span>
+  </a>
+  <span class="top-note">Asisten prediksi pembelajaran</span>
+</header>
+
+<main class="layout">
+  <section class="intro">
+    <span class="eyebrow">Kenali kesehatan Anda</span>
+    <h1>Seberapa besar risiko diabetes Anda?</h1>
+    <p class="lead">Masukkan lima data kesehatan untuk melihat perkiraan model. Geser slider atau ketik nilainya langsung; setelah prediksi pertama, hasil ikut diperbarui setiap kali nilai diubah.</p>
+  </section>
+
+  <section class="form-card" aria-labelledby="form-title">
+    <div class="card-head">
+      <div>
+        <h2 id="form-title">Data kesehatan</h2>
+        <p>Isi semua data dalam rentang yang tersedia.</p>
+      </div>
+      <span class="progress-copy" id="progress-copy">5 dari 5 data siap</span>
+    </div>
+    <div class="progress-track" id="progress" role="progressbar" aria-label="Kelengkapan data" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-caption" id="progress-caption">Data lengkap—Anda bisa mulai menghitung.</p>
+
+    <form id="form" novalidate>
+      <div class="fields">
+      {% for f in fields %}
+        <div class="field" id="field-{{ f.name }}">
+          <div class="row">
+            <label for="n-{{ f.name }}">{{ f.label }}</label>
+            <span class="num">
+              <input type="number" id="n-{{ f.name }}" name="{{ f.name }}" min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}" value="{{ f.value }}" inputmode="decimal" required aria-describedby="hint-{{ f.name }}">
+              <span class="unit">{{ f.unit }}</span>
+            </span>
+          </div>
+          <input type="range" id="r-{{ f.name }}" min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}" value="{{ f.value }}" aria-label="Atur {{ f.label }}" aria-controls="n-{{ f.name }}">
+          <div class="range-label" id="hint-{{ f.name }}">
+            <span>{{ f.min }} {{ f.unit }}</span>
+            <span>{{ f.max }} {{ f.unit }}</span>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="submit-button" type="submit">
+          <span id="submit-label">Hitung risiko</span>
+          <span class="button-icon" aria-hidden="true">→</span>
+        </button>
+        <button class="secondary" id="reset-button" type="button">Atur ulang</button>
+      </div>
+      <div class="examples" aria-label="Contoh data">
+        <span class="examples-label">Ingin mencoba? Isi contoh data:</span>
+        <button class="example" type="button" data-tone="low" data-preset="2,95,66,22.5,28">Risiko rendah</button>
+        <button class="example" type="button" data-tone="medium" data-preset="5,135,78,29,42">Contoh lainnya</button>
+        <button class="example" type="button" data-tone="high" data-preset="7,170,88,35,56">Risiko tinggi</button>
+      </div>
+      <p class="err" id="err" role="alert" aria-live="assertive"></p>
+    </form>
+  </section>
+
+  <aside id="panel" aria-live="polite" aria-busy="false">
+    <div class="result-head">
+      <h2>Hasil analisis</h2>
+      <span class="model-tag">LOGISTIC REGRESSION</span>
+    </div>
+    <div class="gauge">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="bar" id="bar" cx="60" cy="60" r="50"/>
+      </svg>
+      <div class="readout">
+        <div class="pct" id="pct">–</div>
+        <div class="sub">probabilitas diabetes</div>
+      </div>
+    </div>
+    <span class="badge" id="badge">Belum dihitung</span>
+    <p class="verdict" id="verdict">Isi data lalu tekan “Hitung risiko” untuk melihat perkiraan.</p>
+    <p class="result-meta" id="result-meta" hidden><span id="result-state">Prediksi model</span><span id="result-time"></span></p>
+    <div class="divider"></div>
+    <div class="why" id="why" hidden>
+      <h3>Faktor yang paling berpengaruh</h3>
+      <div class="contrib" id="contrib"></div>
+      <p class="legend">Merah menunjukkan kontribusi yang menaikkan skor; biru menurunkannya.</p>
+    </div>
+    <p class="disclaimer">Hasil ini hanya untuk pembelajaran, bukan diagnosis medis. Konsultasikan kondisi kesehatan dengan tenaga medis.</p>
+  </aside>
+
+  <p class="note">
+    <span class="note-icon" aria-hidden="true">i</span>
+    <span>Model dilatih menggunakan data sintetis dengan akurasi uji {{ (metrik.accuracy * 100)|round(0)|int }}%. Prediksi bukan pengganti pemeriksaan gula darah atau saran dokter.</span>
+  </p>
+</main>
+
+<script>
+const form = document.getElementById('form');
+const panel = document.getElementById('panel');
+const names = [...form.querySelectorAll('input[type=number]')].map(input => input.name);
+const $ = id => document.getElementById(id);
+const submitButton = $('submit-button');
+const submitLabel = $('submit-label');
+let hasResult = false;
+let timer;
+let activeRequest;
+let requestNumber = 0;
+
+function fieldIsValid(numberInput) {
+  return numberInput.value !== '' && numberInput.validity.valid;
+}
+
+function updateFormState() {
+  const validCount = names.reduce((count, name) => {
+    const input = $('n-' + name);
+    const valid = fieldIsValid(input);
+    $('field-' + name).classList.toggle('invalid', !valid && input.value !== '');
+    return count + Number(valid);
+  }, 0);
+
+  $('progress-copy').textContent = `${validCount} dari ${names.length} data siap`;
+  $('progress').setAttribute('aria-valuenow', validCount);
+  $('progress-fill').style.width = `${validCount / names.length * 100}%`;
+  $('progress-caption').textContent = validCount === names.length
+    ? 'Data lengkap—Anda bisa mulai menghitung.'
+    : 'Lengkapi semua nilai dan pastikan masih dalam rentang.';
+  return validCount === names.length;
+}
+
+names.forEach(name => {
+  const numberInput = $('n-' + name);
+  const rangeInput = $('r-' + name);
+
+  rangeInput.addEventListener('input', () => {
+    numberInput.value = rangeInput.value;
+    $('err').textContent = '';
+    updateFormState();
+    scheduleLivePrediction();
+  });
+
+  numberInput.addEventListener('input', () => {
+    if (fieldIsValid(numberInput)) rangeInput.value = numberInput.value;
+    $('err').textContent = '';
+    updateFormState();
+    scheduleLivePrediction();
+  });
+});
+
+function scheduleLivePrediction() {
+  clearTimeout(timer);
+  if (hasResult && updateFormState()) {
+    timer = setTimeout(() => predict(), 350);
+  }
+}
+
+document.querySelectorAll('[data-preset]').forEach(button => {
+  button.addEventListener('click', () => {
+    button.dataset.preset.split(',').forEach((value, index) => {
+      const name = names[index];
+      $('n-' + name).value = value;
+      $('r-' + name).value = value;
+    });
+    $('err').textContent = '';
+    updateFormState();
+    predict();
+  });
+});
+
+$('reset-button').addEventListener('click', () => {
+  clearTimeout(timer);
+  requestNumber++;
+  if (activeRequest) activeRequest.abort();
+  form.reset();
+  hasResult = false;
+  activeRequest = null;
+  panel.className = '';
+  panel.setAttribute('aria-busy', 'false');
+  $('pct').textContent = '–';
+  $('bar').style.strokeDashoffset = 314.16;
+  $('badge').textContent = 'Belum dihitung';
+  $('verdict').textContent = 'Isi data lalu tekan “Hitung risiko” untuk melihat perkiraan.';
+  $('result-meta').hidden = true;
+  $('why').hidden = true;
+  $('contrib').replaceChildren();
+  $('err').textContent = '';
+  submitButton.disabled = false;
+  submitLabel.textContent = 'Hitung risiko';
+  updateFormState();
+});
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  predict();
+});
+
+async function predict() {
+  clearTimeout(timer);
+  if (!updateFormState()) {
+    $('err').textContent = 'Periksa kembali semua nilai. Isi angka sesuai rentang yang tertera.';
+    const invalidInput = names.map(name => $('n-' + name)).find(input => !fieldIsValid(input));
+    if (invalidInput) {
+      invalidInput.focus();
+      invalidInput.reportValidity();
+    }
+    return;
+  }
+
+  if (activeRequest) activeRequest.abort();
+  const controller = new AbortController();
+  activeRequest = controller;
+  const currentRequest = ++requestNumber;
+  const body = Object.fromEntries(names.map(name => [name, Number($('n-' + name).value)]));
+  $('err').textContent = '';
+  panel.setAttribute('aria-busy', 'true');
+  submitButton.disabled = true;
+  submitLabel.textContent = 'Menghitung...';
+
+  try {
+    const response = await fetch('/predict', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      $('err').textContent = result.error || 'Prediksi gagal diproses. Periksa data Anda.';
+      return;
+    }
+    if (currentRequest === requestNumber) show(result);
+  } catch (error) {
+    if (error.name !== 'AbortError') {
+      $('err').textContent = 'Server tidak merespons. Pastikan aplikasi masih berjalan.';
+    }
+  } finally {
+    if (currentRequest === requestNumber) {
+      activeRequest = null;
+      panel.setAttribute('aria-busy', 'false');
+      submitButton.disabled = false;
+      submitLabel.textContent = 'Hitung risiko';
+    }
+  }
+}
+
+function show(result) {
+  hasResult = true;
+  panel.className = result.kategori;
+  $('pct').textContent = Math.round(result.probabilitas * 100) + '%';
+  $('bar').style.strokeDashoffset = 314.16 * (1 - result.probabilitas);
+  $('badge').textContent = 'Risiko ' + result.kategori;
+  $('verdict').textContent = result.prediksi === 'Diabetes'
+    ? 'Model memperkirakan kemungkinan diabetes berdasarkan data yang Anda masukkan.'
+    : 'Model tidak mengklasifikasikan data ini sebagai diabetes. Jaga pola hidup sehat.';
+  $('result-state').textContent = result.prediksi === 'Diabetes'
+    ? 'Prediksi: diabetes'
+    : 'Prediksi: tidak diabetes';
+  $('result-time').textContent = 'Baru saja';
+  $('result-meta').hidden = false;
+
+  const maxContribution = Math.max(...result.kontribusi.map(item => Math.abs(item.nilai)), 0.01);
+  $('contrib').replaceChildren(...result.kontribusi.map(item => {
+    const label = document.createElement('span');
+    label.className = 'contrib-label';
+    label.textContent = item.fitur;
+
+    const track = document.createElement('div');
+    track.className = 'track-c';
+    const fill = document.createElement('div');
+    const width = Math.abs(item.nilai) / maxContribution * 50;
+    const positive = item.nilai >= 0;
+    fill.className = `fill ${positive ? 'up' : 'down'}`;
+    fill.style.width = `${width}%`;
+    fill.style.left = `${positive ? 50 : 50 - width}%`;
+    track.append(fill);
+    return [label, track];
+  }).flat());
+  $('why').hidden = false;
+}
+
+updateFormState();
+</script>
+</body>
+</html>
