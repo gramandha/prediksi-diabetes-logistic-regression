@@ -1,11 +1,22 @@
-﻿# 🩺 Evaluasi Model Klasifikasi — Prediksi Risiko Diabetes
+﻿# Evaluasi Model Klasifikasi — Prediksi Risiko Diabetes
 
-> **Tugas 2 — Day 2 | Machine Learning Training**
+> **Machine Learning Training**
 > Penulis: **Gramandha Wega Intyanto**
+
+## Teknologi dan Library
+
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge&logo=matplotlib&logoColor=white)](https://matplotlib.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge)](https://seaborn.pydata.org/)
+[![Joblib](https://img.shields.io/badge/Joblib-333333?style=for-the-badge)](https://joblib.readthedocs.io/)
+[![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
 
 ---
 
-## 📋 Deskripsi Proyek
+## Deskripsi Proyek
 
 Proyek ini bertujuan untuk membangun, mengevaluasi, dan menyajikan model klasifikasi **Logistic Regression** yang memprediksi risiko diabetes berdasarkan data klinis pasien. Proyek mencakup seluruh alur kerja *machine learning*, mulai dari eksplorasi data, pelatihan model, evaluasi komprehensif, hingga deployment sebagai aplikasi web interaktif menggunakan **Flask**.
 
@@ -13,7 +24,7 @@ Dataset yang digunakan adalah **Pima Indians Diabetes Dataset**, yang berisi dat
 
 ---
 
-## 🗂️ Struktur Direktori
+## Struktur Direktori
 
 ```
 1_evaluasi_model_klasifikasi_gramandha_wega_intyanto/
@@ -42,7 +53,7 @@ Dataset yang digunakan adalah **Pima Indians Diabetes Dataset**, yang berisi dat
 
 ---
 
-## 🤖 Detail Model
+## Detail Model
 
 | Atribut | Nilai |
 |---|---|
@@ -55,7 +66,7 @@ Dataset yang digunakan adalah **Pima Indians Diabetes Dataset**, yang berisi dat
 
 ---
 
-## 📊 Performa Model
+## Performa Model
 
 | Metrik | Nilai |
 |---|---|
@@ -73,7 +84,7 @@ Dataset yang digunakan adalah **Pima Indians Diabetes Dataset**, yang berisi dat
 
 ---
 
-## 🔍 Alur Kerja (Notebook)
+## Alur Kerja (Notebook)
 
 Notebook `membuat_model_logistic_regression_diabetes.ipynb` mencakup:
 
@@ -103,7 +114,7 @@ Notebook `membuat_model_logistic_regression_diabetes.ipynb` mencakup:
 
 ---
 
-## 🌐 Aplikasi Web (Flask)
+## Aplikasi Web (Flask)
 
 Aplikasi web interaktif memungkinkan pengguna memasukkan data klinis secara langsung dan mendapatkan prediksi risiko diabetes secara real-time.
 
@@ -128,7 +139,7 @@ Aplikasi web interaktif memungkinkan pengguna memasukkan data klinis secara lang
 
 ---
 
-## ⚙️ Cara Menjalankan
+## Cara Menjalankan
 
 ### 1. Persiapan Lingkungan
 
@@ -162,7 +173,7 @@ Buka browser dan akses: http://127.0.0.1:5000
 
 ---
 
-## 📦 Dependensi
+## Dependensi
 
 ```
 numpy
@@ -176,7 +187,7 @@ flask
 
 ---
 
-## 📌 Catatan
+## Catatan
 
 - Model dibaca langsung dari file `models/model_diabetes.pkl` — pastikan file ini ada sebelum menjalankan `app.py`.
 - Jika model belum tersedia, jalankan terlebih dahulu notebook untuk menghasilkannya.
@@ -184,10 +195,16 @@ flask
 
 ---
 
-## 👤 Informasi Penulis
+## Informasi Penulis
 
 | Atribut | Detail |
 |---|---|
 | **Nama** | Gramandha Wega Intyanto |
 | **Konteks** | Tugas 2 — Day 2, Machine Learning Training |
 | **Topik** | Evaluasi Model Klasifikasi (Logistic Regression) |
+
+## Lisensi
+
+Proyek ini menggunakan lisensi **Apache License 2.0**. Lihat file [LICENSE](LICENSE) untuk ketentuan lengkap.
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
