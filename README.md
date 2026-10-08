@@ -5,14 +5,16 @@
 
 ## Teknologi dan Library
 
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge&logo=matplotlib&logoColor=white)](https://matplotlib.org/)
-[![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge)](https://seaborn.pydata.org/)
-[![Joblib](https://img.shields.io/badge/Joblib-333333?style=for-the-badge)](https://joblib.readthedocs.io/)
-[![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python)](https://www.python.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-library-013243?logo=numpy)](https://numpy.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-library-150458?logo=pandas)](https://pandas.pydata.org/)
+[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-library-F7931E?logo=scikitlearn)](https://scikit-learn.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-library-11557C?logo=matplotlib)](https://matplotlib.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-library-4C72B0)](https://seaborn.pydata.org/)
+[![Joblib](https://img.shields.io/badge/Joblib-library-333333)](https://joblib.readthedocs.io/)
+[![Flask](https://img.shields.io/badge/Flask-library-000000?logo=flask)](https://flask.palletsprojects.com/)
+
+![Status](https://img.shields.io/badge/Status-Selesai-2ea44f?logo=checkmarx)
 
 ---
 
